@@ -1,35 +1,39 @@
 // src/components/Dashboard.jsx
-import React, { useEffect, useState } from 'react';
+import {React, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import './Dashboard.css';
+import { FaPlusCircle } from 'react-icons/fa';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { isSignedIn, user } = useUser();
-  const [userData, setUserData] = useState({ firstName: '', lastName: '' });
+  const [userData, setUserData] = useState({
+    firstName: sessionStorage.getItem('firstName') || '',
+    lastName: sessionStorage.getItem('lastName') || '',
+  });
 
-  useEffect(() => {
-    if (!isSignedIn) {
-      navigate('/'); // Redirect to the homepage if the user is not signed in
-    } else {
-      // Store and update user data from Clerk's `useUser` hook
-      const firstName = user?.firstName || sessionStorage.getItem('firstName') || '';
-      const lastName = user?.lastName || sessionStorage.getItem('lastName') || '';
+  // Placeholder for checking if flashcards exist
+  const flashcardsExist = false; // This should be replaced with actual logic
 
-      if (firstName && lastName) {
-        sessionStorage.setItem('firstName', firstName);
-        sessionStorage.setItem('lastName', lastName);
-      }
-
-      setUserData({ firstName, lastName });
-    }
-  }, [isSignedIn, user, navigate]);
+  const handleCreateNewSet = () => {
+    // Logic to create a new set of flashcards
+    console.log("Creating a new set of flashcards...");
+    // navigate to the flashcard creation page
+  };
 
   return (
     <div className="dashboard">
-      <h1>Welcome to CardifyAI, {userData.firstName} {userData.lastName}!</h1>
-      <p>Your personal flashcard dashboard.</p>
+      {!flashcardsExist ? (
+        <div className="empty-state">
+          <h2>Hello, {userData.firstName}! It looks like you haven't created any flashcards yet.</h2>
+          <p>Let's get started by creating your first set of AI-powered flashcards!</p>
+          <FaPlusCircle className="plus-icon" onClick={handleCreateNewSet} />
+        </div>
+      ) : (
+        <div>
+          {/* Flashcards content goes here */}
+        </div>
+      )}
     </div>
   );
 };

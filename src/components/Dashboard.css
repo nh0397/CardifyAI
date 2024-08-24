@@ -1,18 +1,53 @@
 /* src/components/Dashboard.css */
 .dashboard {
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
-    background-color: #ffffff;
-    min-height: 100vh;
+    background-color: #f4f4f4;
   }
   
-  .dashboard h1 {
-    font-size: 2.5rem;
+  .empty-state {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .empty-state h2 {
+    font-size: 2rem;
     color: #333;
+    margin-bottom: 20px;
   }
   
-  .dashboard p {
+  .empty-state p {
     font-size: 1.2rem;
     color: #666;
+    margin-bottom: 40px;
+  }
+  
+  .plus-icon {
+    font-size: 5rem;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .plus-icon:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    .empty-state h2 {
+      font-size: 1.5rem;
+    }
+  
+    .empty-state p {
+      font-size: 1rem;
+    }
+  
+    .plus-icon {
+      font-size: 4rem;
+    }
   }
   
