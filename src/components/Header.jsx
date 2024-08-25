@@ -6,7 +6,7 @@ import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
-   const [userData, setUserData] = useState({
+   const [userData] = useState({
     firstName: sessionStorage.getItem('firstName') || '',
     lastName: sessionStorage.getItem('lastName') || '',
   });

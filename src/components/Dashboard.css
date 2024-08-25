@@ -1,11 +1,13 @@
 /* src/components/Dashboard.css */
 .dashboard {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     text-align: center;
     background-color: #f4f4f4;
+    position: relative;
   }
   
   .empty-state {
@@ -37,17 +39,132 @@
     transform: scale(1.1);
   }
   
-  @media (max-width: 768px) {
-    .empty-state h2 {
-      font-size: 1.5rem;
-    }
+  .loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
   
-    .empty-state p {
-      font-size: 1rem;
-    }
+  .spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #007bff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
   
-    .plus-icon {
-      font-size: 4rem;
-    }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .flashcard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    position: relative;
+  }
+  
+  .flashcard-wrapper {
+    position: relative;
+    height: 100%; /* Ensure the flashcard wrapper takes up the full height */
+  }
+  
+  .flashcard {
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .flashcard-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .flashcard-content p {
+    font-size: 1.2rem;
+  }
+  
+  .swipe-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    opacity: 0.9;
+  }
+  
+  .swipe-indicator.save {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .swipe-indicator.skip {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .feedback-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+  }
+  
+  .feedback-modal h3 {
+    margin-bottom: 20px;
+  }
+  
+  .feedback-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .feedback-yes {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .feedback-no {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
   }
   
