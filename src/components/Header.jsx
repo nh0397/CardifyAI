@@ -3,13 +3,14 @@ import { useUser, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
-const Header = () => {
+const Header = (showPlus) => {
   const navigate = useNavigate();
   const { isLoaded, user } = useUser(); // Destructure to get user and isLoaded
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
   });
+  console.log(showPlus)
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -18,8 +19,6 @@ const Header = () => {
         firstName: user.firstName,
         lastName: user.lastName,
       });
-      sessionStorage.setItem('firstName', userData.firstName)
-      sessionStorage.setItem('lastName', userData.lastName)
 
     }
   }, [isLoaded, user]);
@@ -34,6 +33,11 @@ const Header = () => {
         </div>
         <SignedIn>
           <div className="user-info">
+            {showPlus.showPlus ? (
+              <>
+              plus
+              </>
+            ) : null }
             <span>{userData.firstName} {userData.lastName}</span>
             <UserButton />
           </div>
