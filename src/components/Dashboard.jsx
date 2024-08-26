@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaPlusCircle, FaTimes, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import './Dashboard.css';
 import generateFlashcards from '../services/gemini';
@@ -17,7 +17,7 @@ const Dashboard = ({ setShowPlus, toggleModal, modalOpen }) => {
   const { isLoaded, user } = useUser();
 
   // Fetch flashcard sets for the user
-  const fetchFlashcardSets = async () => {
+  const fetchFlashcardSets = useCallback(async () => {
     if (user) {
       const userId = `${user.firstName}-${user.lastName}`;
       const flashcardsRef = collection(db, 'users', userId, 'flashcards');
@@ -30,13 +30,13 @@ const Dashboard = ({ setShowPlus, toggleModal, modalOpen }) => {
       setFlashcardSets(sets);
       setLoading(false);
     }
-  };
+  }, [user, setShowPlus]);
 
   useEffect(() => {
     if (isLoaded) {
       fetchFlashcardSets();
     }
-  }, [isLoaded, user,fetchFlashcardSets]);
+  }, [isLoaded, fetchFlashcardSets]);
 
   const handleCreateNewSet = async (topic) => {
     setLoading(true);
