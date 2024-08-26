@@ -9,8 +9,13 @@
 }
 
 .empty-state {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98vw;
   margin-bottom: 20px;
+  height: 90vh;
 }
 
 .empty-state h2 {

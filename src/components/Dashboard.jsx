@@ -96,7 +96,7 @@ const Dashboard = () => {
           <p>Loading your flashcards...</p>
         </div>
       ) : (
-        <div>
+        <>
           {flashcardSets.length === 0 ? (
             <div className="empty-state">
               <h2>It looks like you haven't created any flashcards yet.</h2>
@@ -150,7 +150,7 @@ const Dashboard = () => {
               </div>
             </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

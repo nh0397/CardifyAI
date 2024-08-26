@@ -1,15 +1,27 @@
-// src/components/Header.jsx
-import {React, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUser, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
-   const [userData] = useState({
-    firstName: sessionStorage.getItem('firstName') || '',
-    lastName: sessionStorage.getItem('lastName') || '',
+  const { isLoaded, user } = useUser(); // Destructure to get user and isLoaded
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
   });
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      // Set user data once it's loaded
+      setUserData({
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
+    }
+  }, [isLoaded, user]);
+
+  console.log("User data in header:", userData);
 
   return (
     <header className="header">
