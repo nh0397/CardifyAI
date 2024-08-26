@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useUser, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-
+import { FaPlusCircle} from 'react-icons/fa';
 const Header = (showPlus) => {
   const navigate = useNavigate();
   const { isLoaded, user } = useUser(); // Destructure to get user and isLoaded
@@ -35,7 +35,7 @@ const Header = (showPlus) => {
           <div className="user-info">
             {showPlus.showPlus ? (
               <>
-              plus
+               <FaPlusCircle className="plus-icon-header" title='Add new cards'/>
               </>
             ) : null }
             <span>{userData.firstName} {userData.lastName}</span>
