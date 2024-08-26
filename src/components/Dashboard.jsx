@@ -36,7 +36,7 @@ const Dashboard = ({ setShowPlus, toggleModal, modalOpen }) => {
     if (isLoaded) {
       fetchFlashcardSets();
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user,fetchFlashcardSets]);
 
   const handleCreateNewSet = async (topic) => {
     setLoading(true);
