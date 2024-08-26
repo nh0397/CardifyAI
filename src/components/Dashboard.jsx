@@ -3,14 +3,13 @@ import { FaPlusCircle, FaTimes, FaArrowLeft, FaArrowRight } from 'react-icons/fa
 import './Dashboard.css';
 import generateFlashcards from '../services/gemini';
 import ProcessingModal from './ProcessingModal';
-import TinderCard from 'react-tinder-card';
 import { db } from '../services/firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 const Dashboard = () => {
   const [flashcardsExist, setFlashcardsExist] = useState(false);
   const [flashcards, setFlashcards] = useState([]);
-  const [loading, setLoading] = useState(true); // Set loading to true initially
+  const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flashcardSets, setFlashcardSets] = useState([]);
@@ -24,7 +23,7 @@ const Dashboard = () => {
     const snapshot = await getDocs(flashcardsRef);
     const sets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setFlashcardSets(sets);
-    setLoading(false); // Set loading to false after data is fetched
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -47,7 +46,6 @@ const Dashboard = () => {
         timestamp: new Date(),
       });
 
-      // After adding the new set, fetch the updated list
       fetchFlashcardSets();
     } catch (error) {
       console.error('Error generating flashcards:', error);
@@ -61,7 +59,7 @@ const Dashboard = () => {
     setFlashcards(set.flashcards);
     setCurrentCardIndex(0);
     setFlashcardsExist(true);
-    setShowFlashcards(true); // Show flashcards on top
+    setShowFlashcards(true);
   };
 
   // Handle closing the flashcards view
@@ -70,19 +68,14 @@ const Dashboard = () => {
     setSelectedSet(null);
   };
 
-  const swiped = (direction) => {
-    const nextIndex = direction === 'right' ? currentCardIndex + 1 : currentCardIndex - 1;
-    if (nextIndex >= 0 && nextIndex < flashcards.length) {
-      setCurrentCardIndex(nextIndex);
-    }
-  };
-
+  // Handle swipe left
   const handleSwipeLeft = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex(currentCardIndex - 1);
     }
   };
 
+  // Handle swipe right
   const handleSwipeRight = () => {
     if (currentCardIndex < flashcards.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
@@ -133,20 +126,19 @@ const Dashboard = () => {
             <div className="flashcard-container">
               <div className="flashcard-wrapper">
                 <FaTimes className="close-icon" onClick={handleCloseFlashcards} />
-                <TinderCard key={currentCardIndex} onSwipe={(direction) => swiped(direction)}>
-                  <div
-                    className="flashcard"
-                    style={{
-                      backgroundColor: currentCardIndex % 2 === 0 ? '#FFD700' : '#FF6347',
-                      color: currentCardIndex % 2 === 0 ? '#000' : '#FFF',
-                    }}
-                  >
-                    <div className="flashcard-content">
-                      <h3>{flashcards[currentCardIndex].front}</h3>
-                      <p>{flashcards[currentCardIndex].back}</p>
-                    </div>
-                  </div>
-                </TinderCard>
+<div
+  className="flashcard"
+  style={{
+    backgroundColor: currentCardIndex % 2 === 0 ? '#FFD700' : '#FF6347', // Gold and Tomato colors
+    color: currentCardIndex % 2 === 0 ? '#000' : '#FFF', // Text color
+  }}
+>
+  <div className="flashcard-content">
+    <h3>{flashcards[currentCardIndex].front}</h3>
+    <p>{flashcards[currentCardIndex].back}</p>
+  </div>
+</div>
+
                 <div className="button-group">
                   <button onClick={handleSwipeLeft} disabled={currentCardIndex === 0}>
                     <FaArrowLeft /> Left
