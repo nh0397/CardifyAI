@@ -7,6 +7,7 @@ const ProcessingModal = ({ show, onClose, onSubmit }) => {
 
   const handleSubmit = () => {
     onSubmit(topic);
+    setTopic('')
   };
 
   if (!show) return null;

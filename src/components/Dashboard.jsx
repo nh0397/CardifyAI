@@ -7,7 +7,7 @@ import { db } from '../services/firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { useUser } from '@clerk/clerk-react';
 
-const Dashboard = ({ togglePlus, toggleModal, modalOpen }) => {
+const Dashboard = ({ setShowPlus, toggleModal, modalOpen }) => {
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -25,7 +25,7 @@ const Dashboard = ({ togglePlus, toggleModal, modalOpen }) => {
       const sets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
       if (sets.length > 0) {
-        togglePlus();
+        setShowPlus(true);
       }
       setFlashcardSets(sets);
       setLoading(false);

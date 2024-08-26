@@ -30,7 +30,7 @@ function App() {
                 modalOpen={modalOpen}
               />
               <Dashboard 
-                togglePlus={togglePlus} 
+                setShowPlus={setShowPlus} 
                 toggleModal={toggleModal}
                 modalOpen={modalOpen}
               />
