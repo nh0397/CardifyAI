@@ -5,58 +5,45 @@ import generateFlashcards from '../services/gemini';
 import ProcessingModal from './ProcessingModal';
 import { db } from '../services/firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { useUser, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 
-
-const Dashboard = ({ togglePlus }) => {
-  const [flashcardsExist, setFlashcardsExist] = useState(false);
+const Dashboard = ({ togglePlus, toggleModal, modalOpen }) => {
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [modalOpen, setModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flashcardSets, setFlashcardSets] = useState([]);
   const [selectedSet, setSelectedSet] = useState(null);
   const [showFlashcards, setShowFlashcards] = useState(false);
-  const [plusInHeader, showPlusInHeader] = useState(false);
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-  });
   const { isLoaded, user } = useUser();
 
   // Fetch flashcard sets for the user
   const fetchFlashcardSets = async () => {
-    const userId = userData.firstName+'-'+userData.lastName;
-    const flashcardsRef = collection(db, 'users', userId, 'flashcards');
-    const snapshot = await getDocs(flashcardsRef);
-    const sets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    if (sets.length > 0) {
-      togglePlus(); // Call togglePlus here
+    if (user) {
+      const userId = `${user.firstName}-${user.lastName}`;
+      const flashcardsRef = collection(db, 'users', userId, 'flashcards');
+      const snapshot = await getDocs(flashcardsRef);
+      const sets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      if (sets.length > 0) {
+        togglePlus();
+      }
+      setFlashcardSets(sets);
+      setLoading(false);
     }
-    setFlashcardSets(sets);
-    setLoading(false);
   };
 
   useEffect(() => {
-    fetchFlashcardSets();
-    if (isLoaded && user) {
-      // Set user data once it's loaded
-      setUserData({
-        firstName: user.firstName,
-        lastName: user.lastName,
-      });
-
+    if (isLoaded) {
+      fetchFlashcardSets();
     }
   }, [isLoaded, user]);
 
-  // Handle flashcard generation
   const handleCreateNewSet = async (topic) => {
     setLoading(true);
-    setModalOpen(false);
+    toggleModal();
     try {
       const generatedFlashcards = await generateFlashcards(topic);
-      
-      const userId = userData.firstName+'-'+userData.lastName;
+      const userId = `${user.firstName}-${user.lastName}`;
       const flashcardsRef = collection(db, 'users', userId, 'flashcards');
       
       await addDoc(flashcardsRef, {
@@ -72,29 +59,24 @@ const Dashboard = ({ togglePlus }) => {
     }
   };
 
-  // Handle selecting a flashcard set
   const handleSetClick = (set) => {
     setSelectedSet(set);
     setFlashcards(set.flashcards);
     setCurrentCardIndex(0);
-    setFlashcardsExist(true);
     setShowFlashcards(true);
   };
 
-  // Handle closing the flashcards view
   const handleCloseFlashcards = () => {
     setShowFlashcards(false);
     setSelectedSet(null);
   };
 
-  // Handle swipe left
   const handleSwipeLeft = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex(currentCardIndex - 1);
     }
   };
 
-  // Handle swipe right
   const handleSwipeRight = () => {
     if (currentCardIndex < flashcards.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
@@ -105,7 +87,7 @@ const Dashboard = ({ togglePlus }) => {
     <div className="dashboard">
       <ProcessingModal
         show={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={toggleModal}
         onSubmit={handleCreateNewSet}
       />
 
@@ -120,7 +102,7 @@ const Dashboard = ({ togglePlus }) => {
             <div className="empty-state">
               <h2>It looks like you haven't created any flashcards yet.</h2>
               <p>Click the plus icon to get started with your first set of AI-powered flashcards!</p>
-              <FaPlusCircle className="plus-icon" onClick={() => setModalOpen(true)} />
+              <FaPlusCircle className="plus-icon" onClick={toggleModal} />
             </div>
           ) : (
             <div className="flashcard-set-grid">

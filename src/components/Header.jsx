@@ -2,28 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useUser, UserButton, SignedIn, SignedOut } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import { FaPlusCircle} from 'react-icons/fa';
-const Header = (showPlus) => {
+import { FaPlusCircle } from 'react-icons/fa';
+
+const Header = ({ showPlus, toggleModal }) => {
   const navigate = useNavigate();
-  const { isLoaded, user } = useUser(); // Destructure to get user and isLoaded
+  const { isLoaded, user } = useUser();
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
   });
-  console.log(showPlus)
 
   useEffect(() => {
     if (isLoaded && user) {
-      // Set user data once it's loaded
       setUserData({
         firstName: user.firstName,
         lastName: user.lastName,
       });
-
     }
   }, [isLoaded, user]);
-
-  console.log("User data in header:", userData);
 
   return (
     <header className="header">
@@ -33,17 +29,21 @@ const Header = (showPlus) => {
         </div>
         <SignedIn>
           <div className="user-info">
-            {showPlus.showPlus ? (
-              <>
-               <FaPlusCircle className="plus-icon-header" title='Add new cards'/>
-              </>
-            ) : null }
+            {showPlus && (
+              <FaPlusCircle
+                className="plus-icon-header"
+                title="Add new cards"
+                onClick={toggleModal}
+              />
+            )}
             <span>{userData.firstName} {userData.lastName}</span>
             <UserButton />
           </div>
         </SignedIn>
         <SignedOut>
-          <button className="btn sign-in-btn" onClick={() => navigate('/login')}>Sign In</button>
+          <button className="btn sign-in-btn" onClick={() => navigate('/login')}>
+            Sign In
+          </button>
         </SignedOut>
       </div>
     </header>

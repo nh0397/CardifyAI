@@ -1,4 +1,3 @@
-// src/App.js
 import { React, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Homepage from "./components/Homepage";
@@ -7,10 +6,14 @@ import Header from "./components/Header";
 
 function App() {
   const [showPlus, setShowPlus] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const togglePlus = () => {
-    console.log("toggle plus called", showPlus)
     setShowPlus(prevShowPlus => !prevShowPlus);
+  };
+
+  const toggleModal = () => {
+    setModalOpen(prevModalOpen => !prevModalOpen);
   };
 
   return (
@@ -21,8 +24,16 @@ function App() {
           path="/dashboard"
           element={
             <>
-              <Header showPlus={showPlus} />
-              <Dashboard togglePlus={togglePlus} />
+              <Header 
+                showPlus={showPlus} 
+                toggleModal={toggleModal}
+                modalOpen={modalOpen}
+              />
+              <Dashboard 
+                togglePlus={togglePlus} 
+                toggleModal={toggleModal}
+                modalOpen={modalOpen}
+              />
             </>
           }
         />
