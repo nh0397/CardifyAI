@@ -18,6 +18,9 @@ const Header = () => {
         firstName: user.firstName,
         lastName: user.lastName,
       });
+      sessionStorage.setItem('firstName', userData.firstName)
+      sessionStorage.setItem('lastName', userData.lastName)
+
     }
   }, [isLoaded, user]);
 

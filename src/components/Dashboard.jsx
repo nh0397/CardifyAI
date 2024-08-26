@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   // Fetch flashcard sets for the user
   const fetchFlashcardSets = async () => {
-    const userId = 'user-id-here'; // Replace with actual user ID
+    const userId = sessionStorage.getItem('firstName') + '-' + sessionStorage.getItem('lastName')
     const flashcardsRef = collection(db, 'users', userId, 'flashcards');
     const snapshot = await getDocs(flashcardsRef);
     const sets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -37,7 +37,7 @@ const Dashboard = () => {
     try {
       const generatedFlashcards = await generateFlashcards(topic);
       
-      const userId = 'user-id-here'; // Replace with actual user ID
+      const userId = sessionStorage.getItem('firstName') + '-' + sessionStorage.getItem('lastName') 
       const flashcardsRef = collection(db, 'users', userId, 'flashcards');
       
       await addDoc(flashcardsRef, {
