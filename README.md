@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# CardifyAI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CardifyAI is a web application designed to generate educational flashcards based on a given topic. It leverages the power of Clerk API for user authentication and Gemini API for generating flashcard content, providing a seamless and interactive experience for users. The app is built using **React.js** and also includes user analytics capabilities.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Authentication**: Integrated with [Clerk API](https://clerk.dev/) for secure user login and registration.
+- **Flashcard Generation**: Uses [Gemini API](https://example.com) to generate educational flashcards based on user-provided topics.
+- **User Analytics**: Collects and displays analytics for users, allowing insights into app usage.
+- **Customizable Prompts**: The prompt for Gemini API calls is defined in the `gemini.js` file, allowing for easy prompt engineering and customization.
 
-### `npm start`
+## Screenshots
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Homepage](./src/images/Homepage.png "Homepage")
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Login/Signup](./src/images/Login%20Signup.png "Login/Signup")
 
-### `npm test`
+![Dashboard](./src/images/Dashboard.png "Dashboard")
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Cards](./src/images/Cards.png "Cards")
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend**: React.js
+- **User Authentication**: Clerk API
+- **Flashcard Content Generation**: Gemini API
+- **User Analytics**: Clerk API
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
 
-### `npm run eject`
+To get a local copy up and running, follow these simple steps.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Make sure you have the following installed:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [npm](https://www.npmjs.com/get-npm)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Setup
 
-## Learn More
+1. Clone the repository:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   git clone https://github.com/nh0397/flashcard-saas
+   cd flashcard-saas
+   ```
+2. Install dependencies:
+    ```
+    npm install
+    ```
+3. Set up environment variables:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    Create a .env file in the root directory of the project and add the following:
+    ```
+    REACT_APP_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+    REACT_APP_API_KEY=your-gemini-api-key
+    REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
+    ```
+- You can get your Clerk publishable key from the [Clerk API dashboard](https://dashboard.clerk.com/apps/).
+- The Firebase API key is required for additional integrations (e.g., user analytics or database usage).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Running the App
+To start the development server, run:
+```
+npm start
+```
+The app will be available at http://localhost:3000.
 
-### Analyzing the Bundle Size
+### Usage
+- Log in or sign up using the integrated Clerk authentication.
+- Once authenticated, enter a topic for which you want to generate flashcards.
+- The app will use the Gemini API to create flashcards for the entered topic.
+- View and study the generated flashcards, with additional features for user analytics.
+- Customizing Prompts
+    - The prompt sent to the Gemini API is defined in the gemini.js file. If you want to modify or engineer the prompt, you can find it there:
+```
+// gemini.js
+```
+Feel free to tweak this prompt to improve or alter the flashcard generation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Learn More
+- Clerk API Documentation: https://clerk.dev/docs
+- Firebase API Documentation: https://firebase.google.com/docs
+- Gemini API Documentation: https://ai.google.dev/gemini-api/docs
 
-### Making a Progressive Web App
+### Contributing
+Contributions are welcome! Please follow these steps to contribute:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Fork the repository.
+- Create your feature branch: git checkout -b feature/YourFeature.
+- Commit your changes: git commit -m 'Add some feature'.
+- Push to the branch: git push origin feature/YourFeature.
+- Open a pull request.
