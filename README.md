@@ -43,8 +43,8 @@ Make sure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/nh0397/flashcard-saas
-   cd flashcard-saas
+   git clone https://github.com/nh0397/CardifyAI
+   cd CardifyAI
    ```
 2. Install dependencies:
     ```
